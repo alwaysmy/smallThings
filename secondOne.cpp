@@ -23,11 +23,11 @@ int main()
     initQueue(women);
     char m,w;
     int k,n,o;
-    cout<<"³õÊ¼»¯ÄÐÉú¶ÓÁÐ£º"<<endl;
-    cout<<"ÇëÊäÈëÄãÏëÈë¶ÓµÄÈËÊý(×î¶à10ÈË)£º";
+    cout<<"åˆå§‹åŒ–ç”·ç”Ÿé˜Ÿåˆ—ï¼š"<<endl;
+    cout<<"è¯·è¾“å…¥ä½ æƒ³å…¥é˜Ÿçš„äººæ•°(æœ€å¤š10äºº)ï¼š";
     cin>>k;
     men.len = k;
-    cout<<"ÇëÒÀ´ÎÊäÈëÈë¶ÓÐÅÏ¢£º";
+    cout<<"è¯·ä¾æ¬¡è¾“å…¥å…¥é˜Ÿä¿¡æ¯ï¼š";
     for(int i=0;i<k;i++)
     {
         cin>>m;
@@ -35,11 +35,11 @@ int main()
     }
     for(int i=k;i<MaxSize-1;i++)
         addQueue(men, '\0');
-    cout<<"³õÊ¼»¯Å®Éú¶ÓÁÐ£º"<<endl;
-    cout<<"ÇëÊäÈëÄãÏëÈë¶ÓµÄÈËÊý£º"<<endl;
+    cout<<"åˆå§‹åŒ–å¥³ç”Ÿé˜Ÿåˆ—ï¼š"<<endl;
+    cout<<"è¯·è¾“å…¥ä½ æƒ³å…¥é˜Ÿçš„äººæ•°ï¼š"<<endl;
     cin>>n;
     women.len = n;
-    cout<<"ÇëÒÀ´ÎÊäÈëÈë¶ÓÐÅÏ¢£º";
+    cout<<"è¯·ä¾æ¬¡è¾“å…¥å…¥é˜Ÿä¿¡æ¯ï¼š";
     for(int i=0;i<n;i++)
     {
         cin>>w;
@@ -47,11 +47,11 @@ int main()
     }
     for(int i=n;i<MaxSize-1;i++)
         addQueue(women, '\0');
-    cout<<"ÇëÊä³öÅä¶ÔÂ×Êý£º";
+    cout<<"è¯·è¾“å‡ºé…å¯¹ä¼¦æ•°ï¼š";
     cin>>o;
     for(int i=0;i<o;i++)
     {
-        cout<<"µÚ"<<(i+1)<<"´ÎÅä¶Ô£º"<<endl;
+        cout<<"ç¬¬"<<(i+1)<<"æ¬¡é…å¯¹ï¼š"<<endl;
         if(men.len>=women.len)
         {
             while(1)
@@ -67,7 +67,7 @@ int main()
                 else
                 {
                     for(int u=men.first;u<men.len;u++)
-                        cout<<"ÄÐ¶Ó"<<men.Queue_List[u]<<"ÂÖ¿Õ"<<endl;
+                        cout<<"ç”·é˜Ÿ"<<men.Queue_List[u]<<"è½®ç©º"<<endl;
                     break;
                 }
             }
@@ -87,7 +87,7 @@ int main()
                 else
                 {
                     for(int u=women.first;u<women.len;u++)
-                        cout<<"Å®¶Ó"<<women.Queue_List[u]<<"ÂÖ¿Õ"<<endl;
+                        cout<<"å¥³é˜Ÿ"<<women.Queue_List[u]<<"è½®ç©º"<<endl;
                     break;
                 }
             }
@@ -139,9 +139,10 @@ data out_Queue(Queue &que)
 }
 void showQueue(Queue que)
 {
-    cout<<"¶ÓÁÐ´æ´¢ÔªËØÎª£º";
+    cout<<"é˜Ÿåˆ—å­˜å‚¨å…ƒç´ ä¸ºï¼š";
     for(int i=0;i<que.len;i++)
         cout<<que.Queue_List[i]<<" ";
+    
     cout<<endl;
 }
 
