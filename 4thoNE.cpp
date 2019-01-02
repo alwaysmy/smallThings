@@ -8,7 +8,7 @@ using namespace std;
 typedef struct TNode
 {
 	ElemType data[30]; //定义数据域类型为字符数组
-	struct TNode *lchild, *rchild; //定义左右孩子节点指针
+    struct TNode *lchild, *rchild; //定义左右孩子节点指针
 }TNode, *Tree;
 
 
@@ -127,7 +127,7 @@ void InOrder (TNode *root){ //中序遍历该二叉排序树
 }
 
 
-void Gongneng(TNode *A)
+void Function(TNode *A)
 {
 	int k;
 	char a[30],c[30],d[30];
@@ -174,8 +174,8 @@ void Gongneng(TNode *A)
 
 int main()
 {
-	TNode *A;
-	A = (TNode*)malloc(sizeof(TNode));//A为根节点
+	TNode *A = new TNode;
+
 	A->lchild = A->rchild= NULL;
 	A->data[0] = ' ';
 	int j,k,m=1;
@@ -189,7 +189,7 @@ int main()
 		TNode *X;
 		char *str;
 		int i;
-	    char ZhongZhuan[15];   //定义中转数组
+	    char Temp[15];   //定义中转数组
 		X = A;
 		cout<<"输入域名"<<j+1<<":";
 		cin>>b;
@@ -201,31 +201,31 @@ int main()
 			if(str)
 			{
 				i = str - s;
-				ZhongZhuan[i+1]='\0'; 
+				Temp[i+1]='\0'; 
 				for (; i>=0; i--, s++)
 				{
-					ZhongZhuan[i] = s[0]; //采用倒叙插入，将字符串插入到中转数组里面
+					Temp[i] = s[0]; //采用倒叙插入，将字符串插入到中转数组里面
 				}
 			}
 			else
 			{   //剩余字符串不含’.’，则中转数组的实际大小为剩余字符串的长度
 				_strrev(s); 
 				i = strlen(s);
-				ZhongZhuan[i + 1] = '\0';
+				Temp[i + 1] = '\0';
 				for (; i >= 0; i--)
 				{
-					ZhongZhuan[i] = s[i]; // 同样采用倒叙插入的方法为中转数组赋值
+					Temp[i] = s[i]; // 同样采用倒叙插入的方法为中转数组赋值
 				}
 				s = '\0';
 			}
-			InsertBST(&A,ZhongZhuan); //将中转数组的信息插入到树中
+			InsertBST(&A,Temp); //将中转数组的信息插入到树中
 		}
 	}
 	cout<<"中序遍历结果为：\n";
 	while(m)
 	{
 		system("cls");
-		Gongneng(A);  //调用功能函数
+		Function(A);  //调用功能函数
         cout<<"是否继续操作？\t是-请输入1；否-请输入0\n输入:";
 		cin>>m;
 	}
