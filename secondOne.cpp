@@ -1,148 +1,191 @@
-#include <iostream>
-#include <cstring>
-using namespace std;
-typedef char data;
-#define MaxSize 10
-typedef  struct Queue{
-    int first;
-    int trail;
-    int len;
-    data Queue_List[MaxSize];
-}Queue;
-void initQueue(Queue &que);
-void addQueue(Queue &que,char val);
-bool isFull(const Queue &que);
-bool isEmpty(Queue &que);
-void showQueue(Queue &que);
-data out_Queue(Queue &que);
-int main()
-{
-    Queue men;
-    Queue women;
-    initQueue(men);
-    initQueue(women);
-    char m,w;
-    int k,n,o;
-    cout<<"初始化男生队列："<<endl;
-    cout<<"请输入你想入队的人数(最多10人)：";
-    cin>>k;
-    men.len = k;
-    cout<<"请依次输入入队信息：";
-    for(int i=0;i<k;i++)
-    {
-        cin>>m;
-        addQueue(men, m);
-    }
-    for(int i=k;i<MaxSize-1;i++)
-        addQueue(men, '\0');
-    cout<<"初始化女生队列："<<endl;
-    cout<<"请输入你想入队的人数："<<endl;
-    cin>>n;
-    women.len = n;
-    cout<<"请依次输入入队信息：";
-    for(int i=0;i<n;i++)
-    {
-        cin>>w;
-        addQueue(women, w);
-    }
-    for(int i=n;i<MaxSize-1;i++)
-        addQueue(women, '\0');
-    cout<<"请输出配对伦数：";
-    cin>>o;
-    for(int i=0;i<o;i++)
-    {
-        cout<<"第"<<(i+1)<<"次配对："<<endl;
-        if(men.len>=women.len)
-        {
-            while(1)
-            {
-                if(!men.Queue_List[men.first])
-                    men.first=0;
-                if(women.Queue_List[women.first])
-                {
-                    m = out_Queue(men);
-                    w = out_Queue(women);
-                    cout<<"("<<m<<","<<w<<")"<<endl;
-                }
-                else
-                {
-                    for(int u=men.first;u<men.len;u++)
-                        cout<<"男队"<<men.Queue_List[u]<<"轮空"<<endl;
-                    break;
-                }
-            }
-            women.first=0;
-        }
-        else{
-            while(1)
-            {
-                if(!women.Queue_List[men.first])
-                    women.first=0;
-                if(men.Queue_List[men.first])
-                {
-                    m = out_Queue(men);
-                    w = out_Queue(women);
-                    cout<<"("<<m<<","<<w<<")"<<endl;
-                }
-                else
-                {
-                    for(int u=women.first;u<women.len;u++)
-                        cout<<"女队"<<women.Queue_List[u]<<"轮空"<<endl;
-                    break;
-                }
-            }
-        men.first=0;
-        }
-    }
-    return 0;
+#include <stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include<iostream>
+#define ElemType char
+#define QueueSize 50
+#define push Push
+#define empty Empty
+#define pop Pop
+#define front Front
+typedef struct Node{
+	ElemType data[10];
+	struct Node *firstchild, *nextsibling;
+}Node,*CSTree;//节点结构
+
+void InitTree(Node *A)
+{  //init a empty tree
+    A = new Node;//creat a new node
+    A->firstchild = A->nextsibling = NULL;
 }
-void initQueue(Queue &que)
-{
-    que.first = 0;
-    que.trail = 0;
-}
-bool isFull(const Queue &que)
-{
-    if(que.first == (que.trail+1)%MaxSize)
-        return true;
-    return false;
-}
-bool isEmpty(Queue &que)
-{
-    if (que.first == que.trail)
-        return true;
-    return false;
-}
-void addQueue(Queue &que,char val)
-{
-    if(isFull(que))
-    {
-        cout<<"Queue is already full.";
-        return;
-    }
-    que.Queue_List[que.trail] = val;
-    que.trail = (que.trail+1)%MaxSize;
-}
-data out_Queue(Queue &que)
-{
-    char a;
-    if(isEmpty(que)){
-        que.first = (que.first+1)%MaxSize;
-        return que.Queue_List[que.first];
-    }
-    else
-    {
-        a = que.Queue_List[que.first];
-        que.first = (que.first+1)%MaxSize;
-        return a;
-    }
-}
-void showQueue(Queue que)
-{
-    cout<<"队列存储元素为：";
-    for(int i=0;i<que.len;i++)
-        cout<<que.Queue_List[i]<<" ";
-    
-    cout<<endl;
+int Search_(Node *X, char *a)
+{    //查找待插入的节点在树中是否存在
+	//find if the node  exist in the tree
+	Node *B;
+	B = X;//set B to the root
+	while (B->data)
+	{
+		if (strcmp(B->data, a) == 0)
+		{
+			X = B;  //find the node'data is equal,then do this
+			return 1;
+		}
+		else
+		{
+			B = B->nextsibling;  //or set B to its sibling
+		}
+	}
+	return 0;
 }
 
+void insert_one(Node *A, ElemType *s)
+{
+	//insert a node into the tree
+	Node *B, *X;		
+	char *str;
+	int i;
+	X = A;  //set X to the root
+	B = new Node;
+	B->firstchild = B->nextsibling = NULL;
+	char Temp[15];  //中转数组
+
+	//loop until the string end 
+	while(s!='\0')
+	{
+		//zhongzhuan接受s中xxx.部分或取完翻转zhongzhuan	
+		str = strchr(s, '.');//返回字符串s中第一次出现点的位置
+		if (str)
+		{
+			i = str - s;
+			Temp[i + 1] = '\0';
+			for (; i >= 0; i--, s++)
+			{
+				Temp[i] = s[0];//将拆分后的节点传入中转数组中
+			}
+		}
+		else
+		{//字符串中不含点符号
+			_strrev(s);
+			i = strlen(s);
+			Temp[i + 1] = '\0';
+			for (; i >= 0; i--)
+			{
+				Temp[i] = s[i];//将字符串存入中转数组里
+			}
+			//s = '\0';
+			break;
+		}
+
+		if (Search_(X, Temp))
+		{//若要插入的字符串已存在该层面上
+			X = X->firstchild;//x指向孩子节点
+			continue;
+		}
+		if (X->data[0] == '0')//question
+		{
+			strcpy(X->data, Temp);//将中转数组的信息复制给待插入节点
+			B = new Node;
+			B->firstchild = B->nextsibling = NULL;
+		}
+		else
+		{
+			strcpy(B->data, Temp);
+			if (X->firstchild)
+			{
+				X->nextsibling = B;//将Ｂ作为Ｘ的兄弟节点
+				B = new Node;
+				B->firstchild = B->nextsibling = NULL;
+				
+				X = X->nextsibling;  //x指向它的兄弟节点
+			}
+			else
+			{	
+				X->firstchild = B;
+				B = new Node;
+				B->firstchild = B->nextsibling = NULL;
+				X = X->firstchild;
+			}
+		}
+	}
+}
+struct Queue {
+	int Top, Tail;
+	Node *a[1000];
+	void Clear();
+	void Push(Node *e);
+	void Pop();
+	Node *Front();
+	bool Empty();
+};//队列封装为结构体
+
+void Queue::Clear() {
+	Top = Tail = 0;
+	return;
+}//清空队列
+
+void Queue::Push(Node *e) {
+	a[Tail++] = e;
+	return;
+}//入队列
+
+void Queue::Pop() {
+	Top++;
+	return;
+}//出队列
+
+Node *Queue::Front() {
+	return a[Top];
+}//取队首元素
+
+bool Queue::Empty() {
+	return Top == Tail;
+}//判空
+
+void BFS(Node *root) {
+	printf("The BFS result:\n");
+	Queue que;
+	que.Clear();
+	que.push(root);//根节点入队列
+	while (!que.empty()) {//队列不空的时候执行循环
+		Node *xx = que.front(); //取队首元素
+        que.pop();//出队列
+		printf("%s\n", xx->data);
+		if (xx->nextsibling) {//出队节点的孩子节点若不空则入队列
+			que.push(xx->nextsibling);
+		}
+		if (xx->firstchild) {//同样若孩子节点不空则入队列
+			que.push(xx->firstchild);
+		}
+	}
+}
+
+void DFS(Node *root) {
+	if (!root) return;//递归结束条件
+	printf("%s\n", root->data);
+	DFS(root->firstchild);//递归遍历孩子节点
+	DFS(root->nextsibling);//递归遍历兄弟节点
+}
+
+int main()
+{
+	int j;
+//    Node *A;
+
+	Node *A = new Node;
+	A->firstchild = A->nextsibling = NULL;
+	A->data[0] = '0';
+	char b[30]; //定义字符数组接收域名
+	char *s;
+	for (j = 0; j<3; j++)
+	{
+		cout<<"Please input the domin:";
+		gets(b);
+		s = b;//s指向数组b
+		_strrev(s);
+		insert_one(A, s);//字符串s存入A中	
+	}
+	BFS(A);//层次优先遍历
+	cout<<"The DFS result:\n";
+	DFS(A);//深度优先遍历
+
+}
