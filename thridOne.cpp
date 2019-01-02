@@ -1,26 +1,27 @@
 #include <stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include<iostream>
 #define ElemType char
 #define QueueSize 50
 #define push Push
 #define empty Empty
 #define pop Pop
 #define front Front
-typedef struct CSNode{
+typedef struct Node{
 	ElemType data[10];
-	struct CSNode *firstchild, *nextsibling;
-}CSNode,*CSTree;//节点结构
+	struct Node *firstchild, *nextsibling;
+}Node,*CSTree;//节点结构
 
-void InitTree(CSNode *A)
+void InitTree(Node *A)
 {  //init a empty tree
-    A = new CSNode;//creat a new node
+    A = new Node;//creat a new node
     A->firstchild = A->nextsibling = NULL;
 }
-int Search_(CSNode *X, char *a)
+int Search_(Node *X, char *a)
 {    //查找待插入的节点在树中是否存在
 	//find if the node  exist in the tree
-	CSNode *B;
+	Node *B;
 	B = X;//set B to the root
 	while (B->data)
 	{
@@ -37,14 +38,14 @@ int Search_(CSNode *X, char *a)
 	return 0;
 }
 
-void insert_one(CSNode *A, ElemType *s)
+void insert_one(Node *A, ElemType *s)
 {
 	//insert a node into the tree
-	CSNode *B, *X;		
+	Node *B, *X;		
 	char *str;
 	int i;
 	X = A;  //set X to the root
-	B = new CSNode;
+	B = new Node;
 	B->firstchild = B->nextsibling = NULL;
 	char Temp[15];  //中转数组
 
@@ -83,7 +84,7 @@ void insert_one(CSNode *A, ElemType *s)
 		if (X->data[0] == '0')//question
 		{
 			strcpy(X->data, Temp);//将中转数组的信息复制给待插入节点
-			B = new CSNode;
+			B = new Node;
 			B->firstchild = B->nextsibling = NULL;
 		}
 		else
@@ -92,7 +93,7 @@ void insert_one(CSNode *A, ElemType *s)
 			if (X->firstchild)
 			{
 				X->nextsibling = B;//将Ｂ作为Ｘ的兄弟节点
-				B = new CSNode;
+				B = new Node;
 				B->firstchild = B->nextsibling = NULL;
 				
 				X = X->nextsibling;  //x指向它的兄弟节点
@@ -100,7 +101,7 @@ void insert_one(CSNode *A, ElemType *s)
 			else
 			{	
 				X->firstchild = B;
-				B = new CSNode;
+				B = new Node;
 				B->firstchild = B->nextsibling = NULL;
 				X = X->firstchild;
 			}
@@ -109,11 +110,11 @@ void insert_one(CSNode *A, ElemType *s)
 }
 struct Queue {
 	int Top, Tail;
-	CSNode *a[1000];
+	Node *a[1000];
 	void Clear();
-	void Push(CSNode *e);
+	void Push(Node *e);
 	void Pop();
-	CSNode *Front();
+	Node *Front();
 	bool Empty();
 };//队列封装为结构体
 
@@ -122,7 +123,7 @@ void Queue::Clear() {
 	return;
 }//清空队列
 
-void Queue::Push(CSNode *e) {
+void Queue::Push(Node *e) {
 	a[Tail++] = e;
 	return;
 }//入队列
@@ -132,7 +133,7 @@ void Queue::Pop() {
 	return;
 }//出队列
 
-CSNode *Queue::Front() {
+Node *Queue::Front() {
 	return a[Top];
 }//取队首元素
 
@@ -140,13 +141,13 @@ bool Queue::Empty() {
 	return Top == Tail;
 }//判空
 
-void BFS(CSNode *root) {
+void BFS(Node *root) {
 	printf("The BFS result:\n");
 	Queue que;
 	que.Clear();
 	que.push(root);//根节点入队列
 	while (!que.empty()) {//队列不空的时候执行循环
-		CSNode *xx = que.front(); //取队首元素
+		Node *xx = que.front(); //取队首元素
         que.pop();//出队列
 		printf("%s\n", xx->data);
 		if (xx->nextsibling) {//出队节点的孩子节点若不空则入队列
@@ -158,7 +159,7 @@ void BFS(CSNode *root) {
 	}
 }
 
-void DFS(CSNode *root) {
+void DFS(Node *root) {
 	if (!root) return;//递归结束条件
 	printf("%s\n", root->data);
 	DFS(root->firstchild);//递归遍历孩子节点
@@ -168,16 +169,16 @@ void DFS(CSNode *root) {
 int main()
 {
 	int j;
-//    CSNode *A;
-//	A = (CSNode*)malloc(sizeof(CSNode));//根节点创建
-	CSNode *A = new CSNode;
+//    Node *A;
+
+	Node *A = new Node;
 	A->firstchild = A->nextsibling = NULL;
 	A->data[0] = '0';
 	char b[30]; //定义字符数组接收域名
 	char *s;
 	for (j = 0; j<3; j++)
 	{
-		printf("Please input the domin:");
+		cout<<"Please input the domin:";
 		gets(b);
 		s = b;//s指向数组b
 		_strrev(s);
