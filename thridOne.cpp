@@ -184,7 +184,7 @@ int main()
 		insert_one(A, s);//字符串s存入A中	
 	}
 	BFS(A);//层次优先遍历
-	printf("The DFS result:\n");
+	cout<<"The DFS result:\n";
 	DFS(A);//深度优先遍历
 
 }
