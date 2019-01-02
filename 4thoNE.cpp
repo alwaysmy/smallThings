@@ -7,97 +7,97 @@ using namespace std;
 
 typedef struct TNode
 {
-	ElemType data[30]; //¶¨ÒåÊı¾İÓòÀàĞÍÎª×Ö·ûÊı×é
-    struct TNode *lchild, *rchild; //¶¨Òå×óÓÒº¢×Ó½ÚµãÖ¸Õë
+	ElemType data[30]; //å®šä¹‰æ•°æ®åŸŸç±»å‹ä¸ºå­—ç¬¦æ•°ç»„
+	struct TNode *lchild, *rchild; //å®šä¹‰å·¦å³å­©å­èŠ‚ç‚¹æŒ‡é’ˆ
 }TNode, *Tree;
 
 
 int SearchBST(Tree T, char *key, Tree f, Tree *p)
 {
-    if (!T)    // Ê÷Îª¿Õ£¬²éÕÒ²»³É¹¦
+    if (!T)    // æ ‘ä¸ºç©ºï¼ŒæŸ¥æ‰¾ä¸æˆåŠŸ
     {
         *p = f;
         return 0;
     }
-    else if(strcmp(key,T->data)==0) // ²éÕÒ³É¹¦ 
+    else if(strcmp(key,T->data)==0) // æŸ¥æ‰¾æˆåŠŸ 
     {
-        *p = T;  //pÖ¸Ïò²éÕÒµ½µÄ½Úµã
+        *p = T;  //pæŒ‡å‘æŸ¥æ‰¾åˆ°çš„èŠ‚ç‚¹
         return 1;
     }
     else if (strcmp(key,T->data)<0)
-        return SearchBST(T->lchild, key, T, p);  //  ÔÚ×ó×ÓÊ÷ÖĞ¼ÌĞø²éÕÒ 
+        return SearchBST(T->lchild, key, T, p);  //  åœ¨å·¦å­æ ‘ä¸­ç»§ç»­æŸ¥æ‰¾ 
     else
-        return SearchBST(T->rchild, key, T, p);  //  ÔÚÓÒ×ÓÊ÷ÖĞ¼ÌĞø²éÕÒ 
+        return SearchBST(T->rchild, key, T, p);  //  åœ¨å³å­æ ‘ä¸­ç»§ç»­æŸ¥æ‰¾ 
 }
 
 int InsertBST(Tree *T, char *key)
 {
     Tree p,s;
-    if (!SearchBST(*T, key, NULL, &p)) // ²éÕÒ²»³É¹¦
+    if (!SearchBST(*T, key, NULL, &p)) // æŸ¥æ‰¾ä¸æˆåŠŸ
     {
 		TNode *s = new TNode;
 		strcpy(s->data, key);
         s->lchild = s->rchild = NULL;
         if (!p)
-            *T = s;            // ²åÈësÎªĞÂµÄ¸ù½áµã
+            *T = s;            // æ’å…¥sä¸ºæ–°çš„æ ¹ç»“ç‚¹
         else if (strcmp(key,p->data)<0)
-            p->lchild = s;    //  ²åÈësÎª×óº¢×Ó 
+            p->lchild = s;    //  æ’å…¥sä¸ºå·¦å­©å­ 
         else
-            p->rchild = s;  //  ²åÈësÎªÓÒº¢×Ó
+            p->rchild = s;  //  æ’å…¥sä¸ºå³å­©å­
         return 1;
     }
     else
-        return 0;  //  Ê÷ÖĞÒÑÓĞ¹Ø¼ü×ÖÏàÍ¬µÄ½áµã£¬²»ÔÙ²åÈë
+        return 0;  //  æ ‘ä¸­å·²æœ‰å…³é”®å­—ç›¸åŒçš„ç»“ç‚¹ï¼Œä¸å†æ’å…¥
 }
 
 
 int Search(TNode *N,char *key)
-{  //  ²éÕÒÊ÷ÖĞÊÇ·ñ´æÔÚÒª²åÈëµÄ½Úµã
+{  //  æŸ¥æ‰¾æ ‘ä¸­æ˜¯å¦å­˜åœ¨è¦æ’å…¥çš„èŠ‚ç‚¹
     TNode *M;
     M=N;
     while(M!=NULL&&strcmp(M->data,key)!=0)
-    {  //  ²éÕÒÖÕÖ¹Ìõ¼şÎªÊ÷Îª¿Õ»òÕß²éÕÒµÄ½ÚµãÊı¾İÓë´ı²éÕÒµÄÊı¾İÏàÍ¬
+    {  //  æŸ¥æ‰¾ç»ˆæ­¢æ¡ä»¶ä¸ºæ ‘ä¸ºç©ºæˆ–è€…æŸ¥æ‰¾çš„èŠ‚ç‚¹æ•°æ®ä¸å¾…æŸ¥æ‰¾çš„æ•°æ®ç›¸åŒ
         if(strcmp(M->data,key)<0) 
-            M=M->rchild;   //  ¼ÌĞø²éÕÒ×ó×ÓÊ÷
+            M=M->rchild;   //  ç»§ç»­æŸ¥æ‰¾å·¦å­æ ‘
         else
-            M=M->lchild;  //  ¼ÌĞø²éÕÒÓÒ×ÓÊ÷
+            M=M->lchild;  //  ç»§ç»­æŸ¥æ‰¾å³å­æ ‘
     }
     if(!M)
-		cout<<"²éÕÒÊ§°Ü£¡\n";
+		cout<<"æŸ¥æ‰¾å¤±è´¥ï¼\n";
     else
-		cout<<"²éÕÒ³É¹¦£¡\n";
+		cout<<"æŸ¥æ‰¾æˆåŠŸï¼\n";
 }
 
-/* ´Ó¶ş²æÅÅĞòÊ÷ÖĞÉ¾³ı½áµãp£¬²¢ÖØ½ÓËüµÄ×ó»òÓÒ×ÓÊ÷¡£ */
+/* ä»äºŒå‰æ’åºæ ‘ä¸­åˆ é™¤ç»“ç‚¹pï¼Œå¹¶é‡æ¥å®ƒçš„å·¦æˆ–å³å­æ ‘ã€‚ */
 int Delete(Tree *p)
 {
     Tree q,s;
-    if((*p)->rchild==NULL) // ÓÒ×ÓÊ÷¿ÕÔòÖ»ĞèÖØ½ÓËüµÄ×ó×ÓÊ÷£¨´ıÉ¾½áµãÊÇÒ¶×ÓÒ²×ß´Ë·ÖÖ§)
+    if((*p)->rchild==NULL) // å³å­æ ‘ç©ºåˆ™åªéœ€é‡æ¥å®ƒçš„å·¦å­æ ‘ï¼ˆå¾…åˆ ç»“ç‚¹æ˜¯å¶å­ä¹Ÿèµ°æ­¤åˆ†æ”¯)
     {
         q=*p;
 		*p=(*p)->lchild;
-		free(q); // ÊÍ·Å¸Ã½Úµã
+		free(q); // é‡Šæ”¾è¯¥èŠ‚ç‚¹
     }
-else if((*p)->lchild==NULL) // Ö»ĞèÖØ½ÓËüµÄÓÒ×ÓÊ÷
+else if((*p)->lchild==NULL) // åªéœ€é‡æ¥å®ƒçš„å³å­æ ‘
     {
         q=*p;
         *p=(*p)->rchild;
-        free(q);  // ÊÍ·Å¸Ã½Úµã
+        free(q);  // é‡Šæ”¾è¯¥èŠ‚ç‚¹
     }
-    else // ×óÓÒ×ÓÊ÷¾ù²»¿Õ
+    else // å·¦å³å­æ ‘å‡ä¸ç©º
     {
         q=*p;
         s=(*p)->lchild;
-        while(s->rchild) // ×ª×ó£¬È»ºóÏòÓÒµ½¾¡Í·£¨ÕÒ´ıÉ¾½áµãµÄÇ°Çı)
+        while(s->rchild) // è½¬å·¦ï¼Œç„¶åå‘å³åˆ°å°½å¤´ï¼ˆæ‰¾å¾…åˆ ç»“ç‚¹çš„å‰é©±)
         {
             q=s;
             s=s->rchild;
         }
-        strcpy((*p)->data,s->data); // sÖ¸Ïò±»É¾½áµãµÄÖ±½ÓÇ°Çı£¨½«±»É¾½áµãÇ°ÇıµÄÖµÈ¡´ú±»É¾½áµãµÄÖµ£©
+        strcpy((*p)->data,s->data); // sæŒ‡å‘è¢«åˆ ç»“ç‚¹çš„ç›´æ¥å‰é©±ï¼ˆå°†è¢«åˆ ç»“ç‚¹å‰é©±çš„å€¼å–ä»£è¢«åˆ ç»“ç‚¹çš„å€¼ï¼‰
         if(q!=*p)
-            q->rchild=s->lchild; // ÖØ½ÓqµÄÓÒ×ÓÊ÷
+            q->rchild=s->lchild; // é‡æ¥qçš„å³å­æ ‘
         else
-            q->lchild=s->lchild; //ÖØ½ÓqµÄ×ó×ÓÊ÷ 
+            q->lchild=s->lchild; //é‡æ¥qçš„å·¦å­æ ‘ 
         free(s);
     }
     return 1;
@@ -105,25 +105,25 @@ else if((*p)->lchild==NULL) // Ö»ĞèÖØ½ÓËüµÄÓÒ×ÓÊ÷
 
 int DeleteBST(Tree *T,char *key)
 {
-    if(!*T) //²»´æÔÚ¹Ø¼ü×ÖµÈÓÚkeyµÄÊı¾İÔªËØ
+    if(!*T) //ä¸å­˜åœ¨å…³é”®å­—ç­‰äºkeyçš„æ•°æ®å…ƒç´ 
         return 0;
     else
     {
-        if (strcmp(key,(*T)->data)==0) //ÕÒµ½¹Ø¼ü×ÖµÈÓÚkeyµÄÊı¾İÔªËØ 
-            return Delete(T);  //µ÷ÓÃDeleteº¯ÊıÉ¾³ı¸Ã½Úµã
+        if (strcmp(key,(*T)->data)==0) //æ‰¾åˆ°å…³é”®å­—ç­‰äºkeyçš„æ•°æ®å…ƒç´  
+            return Delete(T);  //è°ƒç”¨Deleteå‡½æ•°åˆ é™¤è¯¥èŠ‚ç‚¹
         else if (strcmp(key,(*T)->data)<0)
-            return DeleteBST(&(*T)->lchild,key);// ¼ÌĞø·ÃÎÊ×ó×ÓÊ÷
+            return DeleteBST(&(*T)->lchild,key);// ç»§ç»­è®¿é—®å·¦å­æ ‘
         else
-            return DeleteBST(&(*T)->rchild,key);//¼ÌĞø·ÃÎÊÓÒ×ÓÊ÷
+            return DeleteBST(&(*T)->rchild,key);//ç»§ç»­è®¿é—®å³å­æ ‘
 
     }
 }
 
-void InOrder (TNode *root){ //ÖĞĞò±éÀú¸Ã¶ş²æÅÅĞòÊ÷
-	if (!root) return ;  //µİ¹é½áÊøÌõ¼ş
-	InOrder (root->lchild); //µİ¹é·ÃÎÊ×ó×ÓÊ÷
+void InOrder (TNode *root){ //ä¸­åºéå†è¯¥äºŒå‰æ’åºæ ‘
+	if (!root) return ;  //é€’å½’ç»“æŸæ¡ä»¶
+	InOrder (root->lchild); //é€’å½’è®¿é—®å·¦å­æ ‘
 	cout<<root->data<<endl;
-	InOrder (root->rchild);//µİ¹é·ÃÎÊÓÒ×ÓÊ÷
+	InOrder (root->rchild);//é€’å½’è®¿é—®å³å­æ ‘
 }
 
 
@@ -131,41 +131,41 @@ void Gongneng(TNode *A)
 {
 	int k;
 	char a[30],c[30],d[30];
-	cout<<"Ñ¡Ôñ²Ù×÷£º\n1-²éÕÒ\n2-É¾³ı\n3-²åÈë\nÊäÈë£º";
+	cout<<"é€‰æ‹©æ“ä½œï¼š\n1-æŸ¥æ‰¾\n2-åˆ é™¤\n3-æ’å…¥\nè¾“å…¥ï¼š";
 	cin>>k;
 	switch(k)
 	{
 	case 1 :
 		system("cls");
-		cout<<"ÊäÈëÒª²éÕÒµÄ½Úµã£º";
+		cout<<"è¾“å…¥è¦æŸ¥æ‰¾çš„èŠ‚ç‚¹ï¼š";
 		cin>>c;
-	    Search(A, c);//µ÷ÓÃ²éÕÒº¯Êı
+	    Search(A, c);//è°ƒç”¨æŸ¥æ‰¾å‡½æ•°
 	    break;
 	case 2:
 		system("cls");
-		cout<<"ÊäÈëÒªÉ¾³ıµÄ½Úµã£º";
+		cout<<"è¾“å…¥è¦åˆ é™¤çš„èŠ‚ç‚¹ï¼š";
 		cin>>a;
 		if(!DeleteBST(&A,a))
-			cout<<"\n´Ë½Úµã²»´æÔÚ\n";
+			cout<<"\næ­¤èŠ‚ç‚¹ä¸å­˜åœ¨\n";
 		else
 			{
-				cout<<"\nÉ¾³ı½Úµã³É¹¦£¡\n\nÉ¾³ıºóÊ÷µÄÖĞĞò±éÀú½á¹ûÈçÏÂ£º\n";
+				cout<<"\nåˆ é™¤èŠ‚ç‚¹æˆåŠŸï¼\n\nåˆ é™¤åæ ‘çš„ä¸­åºéå†ç»“æœå¦‚ä¸‹ï¼š\n";
 				InOrder(A);
-			}//É¾³ıºó£¬½øĞĞÒ»´Î±éÀú¼ì²éÉ¾³ıºóµÄ¶ş²æÅÅĞòÊ÷
+			}//åˆ é™¤åï¼Œè¿›è¡Œä¸€æ¬¡éå†æ£€æŸ¥åˆ é™¤åçš„äºŒå‰æ’åºæ ‘
         break;
 	case 3:
 		system("cls");
-		cout<<"ÇëÊäÈëÒª²åÈëµÄ½Úµã£º";
+		cout<<"è¯·è¾“å…¥è¦æ’å…¥çš„èŠ‚ç‚¹ï¼š";
 		cin>>d;
 		if(!InsertBST(&A,d))
-			cout<<"²åÈëÊ§°Ü!Òª²åÈëµÄ½ÚµãÒÑ´æÔÚ!\n";
+			cout<<"æ’å…¥å¤±è´¥!è¦æ’å…¥çš„èŠ‚ç‚¹å·²å­˜åœ¨!\n";
 		else
 		{
-			cout<<"\n²åÈë³É¹¦!\n\n²åÈëºóÊ÷µÄÖĞĞò±éÀú½á¹ûÈçÏÂ£º\n";
-		    InOrder(A);//²åÈë³É¹¦ºó£¬ÖĞĞò±éÀú¸ÃÊ÷
+			cout<<"\næ’å…¥æˆåŠŸ!\n\næ’å…¥åæ ‘çš„ä¸­åºéå†ç»“æœå¦‚ä¸‹ï¼š\n";
+		    InOrder(A);//æ’å…¥æˆåŠŸåï¼Œä¸­åºéå†è¯¥æ ‘
 		}
 		break;
-   default : cout<<"ÊäÈëÊıÖµ´íÎó!\n";
+   default : cout<<"è¾“å…¥æ•°å€¼é”™è¯¯!\n";
 
 	}
 }
@@ -175,58 +175,58 @@ void Gongneng(TNode *A)
 int main()
 {
 	TNode *A;
-	A = (TNode*)malloc(sizeof(TNode));//AÎª¸ù½Úµã
+	A = (TNode*)malloc(sizeof(TNode));//Aä¸ºæ ¹èŠ‚ç‚¹
 	A->lchild = A->rchild= NULL;
 	A->data[0] = ' ';
 	int j,k,m=1;
 	char b[30];
 	char *s,*t;
-	cout<<"ÇëÊ×ÏÈ´´½¨Ò»¿ÃÊ÷²¢ÊäÈëÒªÊäÈëµÄÓòÃû¸öÊı£º";
+	cout<<"è¯·é¦–å…ˆåˆ›å»ºä¸€æ£µæ ‘å¹¶è¾“å…¥è¦è¾“å…¥çš„åŸŸåä¸ªæ•°ï¼š";
 
 	cin>>k;
-    for(j=0;j<k;j++)//forÑ­»·ÊäÈëÓòÃû
+    for(j=0;j<k;j++)//forå¾ªç¯è¾“å…¥åŸŸå
 	{
 		TNode *X;
 		char *str;
 		int i;
-	    char ZhongZhuan[15];   //¶¨ÒåÖĞ×ªÊı×é
+	    char ZhongZhuan[15];   //å®šä¹‰ä¸­è½¬æ•°ç»„
 		X = A;
-		cout<<"ÊäÈëÓòÃû"<<j+1<<":";
+		cout<<"è¾“å…¥åŸŸå"<<j+1<<":";
 		cin>>b;
-		s = b;  //sÖ¸ÏòÊı×éb
-		_strrev(s); //½«¸Ã×Ö·ûÊı×é·´×ª
+		s = b;  //sæŒ‡å‘æ•°ç»„b
+		_strrev(s); //å°†è¯¥å­—ç¬¦æ•°ç»„åè½¬
 		for (; s != '\0';)
 		{
-			str = strchr(s, '.'); //strÎª×Ö·û´®sÀïÃæÊ×´Î³öÏÖ¡®.¡¯µÄÎ»ÖÃ
+			str = strchr(s, '.'); //strä¸ºå­—ç¬¦ä¸²sé‡Œé¢é¦–æ¬¡å‡ºç°â€˜.â€™çš„ä½ç½®
 			if(str)
 			{
 				i = str - s;
 				ZhongZhuan[i+1]='\0'; 
 				for (; i>=0; i--, s++)
 				{
-					ZhongZhuan[i] = s[0]; //²ÉÓÃµ¹Ğğ²åÈë£¬½«×Ö·û´®²åÈëµ½ÖĞ×ªÊı×éÀïÃæ
+					ZhongZhuan[i] = s[0]; //é‡‡ç”¨å€’å™æ’å…¥ï¼Œå°†å­—ç¬¦ä¸²æ’å…¥åˆ°ä¸­è½¬æ•°ç»„é‡Œé¢
 				}
 			}
 			else
-			{   //Ê£Óà×Ö·û´®²»º¬¡¯.¡¯£¬ÔòÖĞ×ªÊı×éµÄÊµ¼Ê´óĞ¡ÎªÊ£Óà×Ö·û´®µÄ³¤¶È
+			{   //å‰©ä½™å­—ç¬¦ä¸²ä¸å«â€™.â€™ï¼Œåˆ™ä¸­è½¬æ•°ç»„çš„å®é™…å¤§å°ä¸ºå‰©ä½™å­—ç¬¦ä¸²çš„é•¿åº¦
 				_strrev(s); 
 				i = strlen(s);
 				ZhongZhuan[i + 1] = '\0';
 				for (; i >= 0; i--)
 				{
-					ZhongZhuan[i] = s[i]; // Í¬Ñù²ÉÓÃµ¹Ğğ²åÈëµÄ·½·¨ÎªÖĞ×ªÊı×é¸³Öµ
+					ZhongZhuan[i] = s[i]; // åŒæ ·é‡‡ç”¨å€’å™æ’å…¥çš„æ–¹æ³•ä¸ºä¸­è½¬æ•°ç»„èµ‹å€¼
 				}
 				s = '\0';
 			}
-			InsertBST(&A,ZhongZhuan); //½«ÖĞ×ªÊı×éµÄĞÅÏ¢²åÈëµ½Ê÷ÖĞ
+			InsertBST(&A,ZhongZhuan); //å°†ä¸­è½¬æ•°ç»„çš„ä¿¡æ¯æ’å…¥åˆ°æ ‘ä¸­
 		}
 	}
-	cout<<"ÖĞĞò±éÀú½á¹ûÎª£º\n";
+	cout<<"ä¸­åºéå†ç»“æœä¸ºï¼š\n";
 	while(m)
 	{
 		system("cls");
-		Gongneng(A);  //µ÷ÓÃ¹¦ÄÜº¯Êı
-        cout<<"ÊÇ·ñ¼ÌĞø²Ù×÷£¿\tÊÇ-ÇëÊäÈë1£»·ñ-ÇëÊäÈë0\nÊäÈë:";
+		Gongneng(A);  //è°ƒç”¨åŠŸèƒ½å‡½æ•°
+        cout<<"æ˜¯å¦ç»§ç»­æ“ä½œï¼Ÿ\tæ˜¯-è¯·è¾“å…¥1ï¼›å¦-è¯·è¾“å…¥0\nè¾“å…¥:";
 		cin>>m;
 	}
 		system("cls");
